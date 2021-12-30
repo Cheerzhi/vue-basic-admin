@@ -30,43 +30,82 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
+export const constantRoutes = [{
+  path: '/login',
+  name: 'login',
+  component: () => import('@/views/login/index'),
+  hidden: true
+},
+{
+  path: '/404',
+  component: () => import('@/views/404'),
+  hidden: true
+},
+{
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  meta: {
     hidden: true
   },
+  children: [{
+    path: 'dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/dashboard/index'),
+    meta: {
+      title: '首页',
+      icon: 'dashboard',
+      hidden: true
+    }
+  }]
+},
+// 404 page must be placed at the end !!!
+{
+  path: '*',
+  redirect: '/404',
+  hidden: true
+}]
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
+export const asyncRoutes = [{
+  path: '/sys',
+  name: 'sys',
+  component: Layout,
+  meta: {
+    title: '系统管理',
+    icon: 'el-icon-setting'
   },
-
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
-  },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-export const asyncRoutes = [
-  {
-
-  }
-]
+  children: [{
+    path: 'role',
+    name: 'role',
+    component: () => import('@/views/sys/role'),
+    meta: {
+      title: '角色管理',
+      icon: 'el-icon-user-solid'
+    }
+  }, {
+    path: 'user',
+    name: 'user',
+    component: () => import('@/views/sys/user'),
+    meta: {
+      title: '用户管理',
+      icon: 'el-icon-user'
+    }
+  }, {
+    path: 'menu',
+    name: 'menu',
+    component: () => import('@/views/sys/menu'),
+    meta: {
+      title: '菜单管理',
+      icon: 'el-icon-menu'
+    }
+  }]
+}]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRoutes
 })
 

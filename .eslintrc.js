@@ -54,7 +54,7 @@ module.exports = {
     }],
     'handle-callback-err': [2, '^(err|error)$'],
     'indent': [2, 2, {
-      'SwitchCase': 1
+      'SwitchCase': 2
     }],
     'jsx-quotes': [2, 'prefer-single'],
     'key-spacing': [2, {
