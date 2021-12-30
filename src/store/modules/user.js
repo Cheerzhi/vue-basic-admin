@@ -2,6 +2,7 @@ import {
   login,
   getInfo
 } from '@/api/user'
+import { getUserMenu } from '@/api/menu'
 import {
   getToken,
   setToken,
@@ -13,8 +14,8 @@ import {
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: '',
-    avatar: ''
+    userInfo: '',
+    roles: []
   }
 }
 
@@ -27,11 +28,11 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_USERINFO: (state, userInfo) => {
+    state.userInfo = userInfo
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -64,24 +65,14 @@ const actions = {
   // 获取用户信息及菜单处理
   getInfo({
     commit,
-    state
+    state,
+    dispatch
   }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const {
-          data
-        } = response
-
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
-        const {
-          name,
-          avatar
-        } = data
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
+      Promise.all([getInfo(state.token), getUserMenu()]).then(([info, menu]) => {
+        commit('SET_USERINFO', info.data.userInfo)
+        commit('SET_ROLES', info.data.userInfo.roles)
+        resolve(menu.data)
       }).catch(error => {
         reject(error)
       })
@@ -89,13 +80,17 @@ const actions = {
   },
 
   // token刷新的接口
-  resetToken({ commit }) {
+  resetToken({
+    commit
+  }) {
     return new Promise(resolve => {
       resolve()
     })
   },
   // 退出登陆时操作
-  logout({ commit }) {
+  logout({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', '')
       removeToken()
