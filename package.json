@@ -20,6 +20,7 @@
     "dateformat": "^5.0.2",
     "docxtemplater": "^3.28.2",
     "element-ui": "2.13.2",
+    "file-saver": "^2.0.5",
     "js-cookie": "2.2.0",
     "jszip-utils": "^0.1.0",
     "normalize.css": "7.0.0",
