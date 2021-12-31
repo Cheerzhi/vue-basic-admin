@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     selectFirstMenu({ name }) {
-      // this.$store.dispatch('menu/changeActiveFirst', name) 
+      console.log(name)
     }
   }
 }
