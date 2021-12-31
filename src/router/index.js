@@ -99,6 +99,31 @@ export const asyncRoutes = [{
       icon: 'el-icon-menu'
     }
   }]
+}, {
+  path: '/school',
+  name: 'school',
+  component: Layout,
+  meta: {
+    title: '学校管理',
+    icon: 'el-icon-setting'
+  },
+  children: [{
+    path: 'classes',
+    name: 'classes',
+    component: () => import('@/views/school/classes'),
+    meta: {
+      title: '班级管理',
+      icon: 'el-icon-menu'
+    }
+  }, {
+    path: 'member',
+    name: 'member',
+    component: () => import('@/views/school/member'),
+    meta: {
+      title: '成员管理',
+      icon: 'el-icon-menu'
+    }
+  }]
 }]
 
 const createRouter = () => new Router({

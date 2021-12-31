@@ -18,6 +18,21 @@ const menu = [{
   name: "sys",
   menuId: "1",
   parentId: "0"
+}, {
+  menuName: "学校管理",
+  name: "school",
+  menuId: "5",
+  parentId: "0"
+}, {
+  menuName: "班级管理",
+  name: "classes",
+  menuId: "6",
+  parentId: "5"
+}, {
+  menuName: "成员管理",
+  name: "member",
+  menuId: "7",
+  parentId: "5"
 }]
 
 const button = [{

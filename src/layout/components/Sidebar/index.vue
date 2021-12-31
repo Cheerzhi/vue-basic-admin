@@ -26,10 +26,25 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      active: ''
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar', 'permissionRoutes'
     ]),
+    secondRoutes() {
+      const activeFirstMenu = this.permissionRoutes.find(i => {
+        return i.name === this.active
+      })
+      if (activeFirstMenu) {
+        return activeFirstMenu.children
+      } else {
+        return []
+      }
+    },
     routes() {
       return this.$router.options.routes
     },
